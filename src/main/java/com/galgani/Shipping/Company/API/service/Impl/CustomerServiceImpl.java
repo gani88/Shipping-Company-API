@@ -7,6 +7,7 @@ import com.galgani.Shipping.Company.API.dto.response.CustomerResponse;
 import com.galgani.Shipping.Company.API.entity.Customer;
 import com.galgani.Shipping.Company.API.repository.CustomerRepository;
 import com.galgani.Shipping.Company.API.service.CustomerService;
+import com.galgani.Shipping.Company.API.utils.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,9 +24,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
+    private final ValidationUtils validationUtils;
 
     @Override
     public Customer create(NewCustomerRequest newCustomerRequest) {
+        validationUtils.validate(newCustomerRequest);
+
         Customer newCustomer = Customer.builder()
                 .customerName(newCustomerRequest.getCustomerName())
                 .email(newCustomerRequest.getEmail())

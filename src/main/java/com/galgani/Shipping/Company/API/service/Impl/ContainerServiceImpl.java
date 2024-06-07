@@ -8,6 +8,7 @@ import com.galgani.Shipping.Company.API.entity.Container;
 import com.galgani.Shipping.Company.API.entity.Customer;
 import com.galgani.Shipping.Company.API.repository.ContainerRepository;
 import com.galgani.Shipping.Company.API.service.ContainerService;
+import com.galgani.Shipping.Company.API.utils.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ContainerServiceImpl implements ContainerService {
     private final ContainerRepository containerRepository;
+    private final ValidationUtils validationUtils;
 
     @Override
     public Container create(NewContainerRequest newContainerRequest) {
+        validationUtils.validate(newContainerRequest);
+
         Container newContainer = Container.builder()
                 .containerType(newContainerRequest.getContainerType())
                 .location(newContainerRequest.getLocation())
