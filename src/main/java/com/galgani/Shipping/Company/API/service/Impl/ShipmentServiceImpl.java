@@ -11,6 +11,8 @@ import com.galgani.Shipping.Company.API.entity.ShipmentDetails;
 import com.galgani.Shipping.Company.API.repository.ShipmentDetailsRepository;
 import com.galgani.Shipping.Company.API.repository.ShipmentRepository;
 import com.galgani.Shipping.Company.API.service.CustomerService;
+import com.galgani.Shipping.Company.API.service.InvoiceService;
+import com.galgani.Shipping.Company.API.service.ShipmentDetailsService;
 import com.galgani.Shipping.Company.API.service.ShipmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,12 +34,12 @@ public class ShipmentServiceImpl implements ShipmentService {
     public ShipmentResponse create(ShipmentRequest shipmentRequest) {
 
         // Save to Shipment
-        Customer customerById = customerService.getById(shipmentRequest.getCustomerId().getId());
+        Customer customerById = customerService.getById(shipmentRequest.getCustomerId());
 
         Shipment shipment = Shipment.builder()
                 .customer(customerById)
-                .arrivalDate(new Date())
-                .departureDate(new Date())
+                .arrivalDate(shipmentRequest.getArrivalDate())
+                .departureDate(shipmentRequest.getDepartureDate())
                 .origin(shipmentRequest.getOrigin())
                 .destination(shipmentRequest.getDestination())
                 .status(shipmentRequest.getStatus())
@@ -54,12 +56,12 @@ public class ShipmentServiceImpl implements ShipmentService {
                         .weight(shipmentDetailsRequest.getWeight())
                         .packageType(shipmentDetailsRequest.getPackageType())
                         .contentDescription(shipmentDetailsRequest.getContentDescription())
+                        .shipment(shipment)
                         .build();
             }
         ).toList();
 
         shipmentDetailsService.createBulk(shipmentDetails);
-        shipment.setShipmentDetails(shipmentDetails);
 
         // Save to Invoice
         List<Invoice> invoices = shipmentRequest.getInvoiceRequests().stream().map(
@@ -67,13 +69,13 @@ public class ShipmentServiceImpl implements ShipmentService {
                     return Invoice.builder()
                             .amount(invoiceRequest.getAmount())
                             .status(invoiceRequest.getStatus())
-                            .dueDate(new Date())
+                            .dueDate(invoiceRequest.getDueDate())
+                            .shipment(shipment)
                             .build();
                 }
         ).toList();
 
-        invoices.createBulk(invoices);
-        shipment.setInvoices(invoices);
+        invoiceService.createBulk(invoices);
 
         // Response
         List<ShipmentDetailsResponse> shipmentDetailsResponses = shipmentDetails.stream().map(
@@ -102,6 +104,7 @@ public class ShipmentServiceImpl implements ShipmentService {
 
         return ShipmentResponse.builder()
                 .id(shipment.getId())
+                .origin(shipment.getOrigin())
                 .arrivalDate(shipment.getArrivalDate())
                 .departureDate(shipment.getDepartureDate())
                 .destination(shipment.getDestination())

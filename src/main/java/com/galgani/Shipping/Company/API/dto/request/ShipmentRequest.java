@@ -19,7 +19,7 @@ public class ShipmentRequest {
     private Date arrivalDate;
     private String status;
     private String trackingNumber;
-    private Customer customerId;
+    private String customerId;
     private List<ShipmentDetailsRequest> shipmentDetailsRequests;
     private List<InvoiceRequest> invoiceRequests;
 }

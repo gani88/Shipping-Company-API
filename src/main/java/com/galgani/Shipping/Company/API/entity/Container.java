@@ -22,8 +22,8 @@ public class Container {
 
     @Column(name = "location")
     private String location;
-
-    @ManyToOne
-    @JoinColumn(name = "shipment_id", referencedColumnName = "id")
-    private Shipment shipment;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "shipment_id", referencedColumnName = "id")
+//    private Shipment shipment;
 }
