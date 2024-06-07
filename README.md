@@ -158,7 +158,3 @@ Native queries are used for searching customers and containers. This allows for 
 
 ### Java Map Usage
 Java Maps are used in `ShipmentServiceImpl` for creating custom responses. This enables flexible and dynamic response generation based on specific requirements.
-## Documentation
-
-[Documentation](https://linktodocumentation)
-
