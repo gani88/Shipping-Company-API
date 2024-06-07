@@ -1,10 +1,12 @@
 package com.galgani.Shipping.Company.API.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.galgani.Shipping.Company.API.constant.ConstantTable;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,4 +42,12 @@ public class Shipment {
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
+
+    @OneToMany(mappedBy = "shipment")
+    @JsonManagedReference
+    private List<ShipmentDetails> shipmentDetails;
+
+    @OneToMany(mappedBy = "shipment")
+    @JsonManagedReference
+    private List<Invoice> invoices;
 }
