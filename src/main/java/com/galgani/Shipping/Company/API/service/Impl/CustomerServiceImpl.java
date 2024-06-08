@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,16 +28,24 @@ public class CustomerServiceImpl implements CustomerService {
     private final ValidationUtils validationUtils;
 
     @Override
-    public Customer create(NewCustomerRequest newCustomerRequest) {
+    public CustomerResponse create(NewCustomerRequest newCustomerRequest) {
         validationUtils.validate(newCustomerRequest);
 
-        Customer newCustomer = Customer.builder()
+        UUID customerId = UUID.randomUUID();
+
+        customerRepository.insertCustomer(
+                customerId,
+                newCustomerRequest.getCustomerName(),
+                newCustomerRequest.getEmail(),
+                newCustomerRequest.getAddress()
+        );
+
+        return CustomerResponse.builder()
+                .id(String.valueOf(customerId))
                 .customerName(newCustomerRequest.getCustomerName())
                 .email(newCustomerRequest.getEmail())
                 .address(newCustomerRequest.getAddress())
                 .build();
-
-        return customerRepository.saveAndFlush(newCustomer);
     }
 
     public Customer findIdException(String id) {
@@ -70,7 +79,7 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.saveAndFlush(customerById);
 
         return CustomerResponse.builder()
-                .id(customerById.getId())
+                .id(String.valueOf(customerById.getId()))
                 .customerName(customerById.getCustomerName())
                 .email(customerById.getEmail())
                 .address(customerById.getAddress())

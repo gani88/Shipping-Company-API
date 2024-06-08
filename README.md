@@ -21,7 +21,7 @@ and shipment details. Invoice will be generated to customer.
 ## Features
 - Create, read, update, and delete (CRUD) operations for shipping-related data.
 - Generate invoices after input in shipment request.
-- Search functionality for customers and containers using native queries.
+- Register Customer and Search functionality for customers and containers using native queries.
 - Java Stream is used for mapping data from Shipment to another table (Shipment Details, Container, Invoice ) .
 
 ## Library and Frameworks
@@ -157,7 +157,9 @@ public class ShipmentDetails {
 ## Use Cases
 
 ### Native Query Usage
-Native queries are used for searching customers and containers. This allows for more complex and optimized queries directly executed in the database.
+Native queries are used for searching customers and containers. 
+This allows for more complex and optimized queries directly executed in the database.
+Native queries also used when register Customer, then it will give a response to Front-End.
 
 ### Java Stream Usage
 Java Stream are used in `ShipmentServiceImpl` for mapping data that originally inputted in shipment request to their

@@ -25,10 +25,10 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<CommonResponse<Customer>> registerCustomer(@RequestBody NewCustomerRequest newCustomerRequest) {
-        Customer registerCustomer = customerService.create(newCustomerRequest);
+    public ResponseEntity<CommonResponse<CustomerResponse>> registerCustomer(@RequestBody NewCustomerRequest newCustomerRequest) {
+        CustomerResponse registerCustomer = customerService.create(newCustomerRequest);
 
-        CommonResponse<Customer> response = CommonResponse.<Customer>builder()
+        CommonResponse<CustomerResponse> response = CommonResponse.<CustomerResponse>builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("Success Create Customer")
                 .data(registerCustomer)

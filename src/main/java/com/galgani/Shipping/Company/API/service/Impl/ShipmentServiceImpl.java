@@ -130,7 +130,7 @@ public class ShipmentServiceImpl implements ShipmentService {
                 .destination(shipment.getDestination())
                 .status(shipment.getStatus())
                 .trackingNumber(shipment.getTrackingNumber())
-                .customerId(shipment.getCustomer().getId())
+                .customerId(String.valueOf(shipment.getCustomer().getId()))
                 .shipmentDetailsResponses(shipmentDetailsResponses)
                 .invoiceResponses(invoiceResponses)
                 .containerResponses(containerResponses)

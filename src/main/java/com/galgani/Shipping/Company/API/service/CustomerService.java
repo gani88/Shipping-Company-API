@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface CustomerService {
-    Customer create(NewCustomerRequest newCustomerRequest);
+    CustomerResponse create(NewCustomerRequest newCustomerRequest);
     Customer getById(String id);
     List<Customer> searchCustomer(SearchCustomerRequest searchCustomerRequest);
     CustomerResponse update(UpdateCustomerRequest updateCustomerRequest);
