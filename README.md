@@ -7,7 +7,7 @@ and shipment details. Invoice will be generated to customer.
 
 ## Table of Contents
 - [Features](#features)
-- [Library & Frameworks](#LibraryandFrameworks)
+- [Library & Frameworks](#library-and-frameworks)
 - [Entities](#entities)
   - [Container](#container)
   - [Customer](#customer)
@@ -16,7 +16,7 @@ and shipment details. Invoice will be generated to customer.
   - [ShipmentDetails](#shipmentdetails)
 - [Use Cases](#use-cases)
   - [Native Query Usage](#native-query-usage)
-  - [Java Stram Usage](#java-map-usage)
+  - [Java Stream Usage](#java-stream-usage)
 
 ## Features
 - Create, read, update, and delete (CRUD) operations for shipping-related data.
