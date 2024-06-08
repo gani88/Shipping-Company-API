@@ -1,5 +1,6 @@
 package com.galgani.Shipping.Company.API.service;
 
+import com.galgani.Shipping.Company.API.dto.request.SearchShipmentRequest;
 import com.galgani.Shipping.Company.API.dto.request.ShipmentRequest;
 import com.galgani.Shipping.Company.API.dto.response.ShipmentResponse;
 import org.springframework.stereotype.Repository;
