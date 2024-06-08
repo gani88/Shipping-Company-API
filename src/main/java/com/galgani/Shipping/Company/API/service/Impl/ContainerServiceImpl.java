@@ -6,6 +6,7 @@ import com.galgani.Shipping.Company.API.dto.request.UpdateContainerRequest;
 import com.galgani.Shipping.Company.API.dto.response.ContainerResponse;
 import com.galgani.Shipping.Company.API.entity.Container;
 import com.galgani.Shipping.Company.API.entity.Customer;
+import com.galgani.Shipping.Company.API.entity.ShipmentDetails;
 import com.galgani.Shipping.Company.API.repository.ContainerRepository;
 import com.galgani.Shipping.Company.API.service.ContainerService;
 import com.galgani.Shipping.Company.API.utils.ValidationUtils;
@@ -73,5 +74,10 @@ public class ContainerServiceImpl implements ContainerService {
         Container isActive = getById(id);
 
         containerRepository.delete(isActive);
+    }
+
+    @Override
+    public List<Container> createBulk(List<Container> containers) {
+        return containerRepository.saveAllAndFlush(containers);
     }
 }

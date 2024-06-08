@@ -20,6 +20,7 @@ public class ShipmentRequest {
     private String status;
     private String trackingNumber;
     private String customerId;
+    private List<NewContainerRequest> newContainerRequests;
     private List<ShipmentDetailsRequest> shipmentDetailsRequests;
     private List<InvoiceRequest> invoiceRequests;
 }

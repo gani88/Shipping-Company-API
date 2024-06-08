@@ -1,10 +1,13 @@
 # Shipping Transportation API
 
-This API is designed to manage and track shipping transactions, including the creation, reading, updating, and deleting of data related to shipments, customers, containers, invoices, and shipment details. The API also generates invoices based on shipment transactions.
+
+This API handle shipping transactions, 
+including the creation, reading, updating, data related to shipments, customers, containers, invoices, 
+and shipment details. Invoice will be generated to customer.
 
 ## Table of Contents
 - [Features](#features)
-- [Library & Frameworks](#technologies)
+- [Library & Frameworks](#LibraryandFrameworks)
 - [Entities](#entities)
   - [Container](#container)
   - [Customer](#customer)
@@ -13,13 +16,13 @@ This API is designed to manage and track shipping transactions, including the cr
   - [ShipmentDetails](#shipmentdetails)
 - [Use Cases](#use-cases)
   - [Native Query Usage](#native-query-usage)
-  - [Java Map Usage](#java-map-usage)
+  - [Java Stram Usage](#java-map-usage)
 
 ## Features
 - Create, read, update, and delete (CRUD) operations for shipping-related data.
-- Track shipments and generate invoices.
+- Generate invoices after input in shipment request.
 - Search functionality for customers and containers using native queries.
-- Custom response creation using Java Maps in the `ShipmentServiceImpl`.
+- Java Stream is used for mapping data from Shipment to another table (Shipment Details, Container, Invoice ) .
 
 ## Library and Frameworks
 - Java
@@ -156,5 +159,7 @@ public class ShipmentDetails {
 ### Native Query Usage
 Native queries are used for searching customers and containers. This allows for more complex and optimized queries directly executed in the database.
 
-### Java Map Usage
-Java Maps are used in `ShipmentServiceImpl` for creating custom responses. This enables flexible and dynamic response generation based on specific requirements.
+### Java Stream Usage
+Java Stream are used in `ShipmentServiceImpl` for mapping data that originally inputted in shipment request to their
+corresponding tables.
+This enables flexible and dynamic response generation based on specific requirements.

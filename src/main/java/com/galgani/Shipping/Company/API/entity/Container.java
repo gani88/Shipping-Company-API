@@ -1,5 +1,6 @@
 package com.galgani.Shipping.Company.API.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.galgani.Shipping.Company.API.constant.ConstantTable;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,8 +23,9 @@ public class Container {
 
     @Column(name = "location")
     private String location;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "shipment_id", referencedColumnName = "id")
-//    private Shipment shipment;
+
+    @ManyToOne
+    @JoinColumn(name = "shipment_id", referencedColumnName = "id", nullable = false)
+    @JsonBackReference
+    private Shipment shipment;
 }

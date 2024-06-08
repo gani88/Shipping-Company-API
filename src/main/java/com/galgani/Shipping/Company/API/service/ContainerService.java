@@ -5,6 +5,7 @@ import com.galgani.Shipping.Company.API.dto.response.ContainerResponse;
 import com.galgani.Shipping.Company.API.dto.response.CustomerResponse;
 import com.galgani.Shipping.Company.API.entity.Container;
 import com.galgani.Shipping.Company.API.entity.Customer;
+import com.galgani.Shipping.Company.API.entity.ShipmentDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public interface ContainerService {
     List<Container> searchContainer(SearchContainerRequest searchContainerRequest);
     ContainerResponse update(UpdateContainerRequest updateContainerRequest);
     void deleteById(String id);
+    List<Container> createBulk(List<Container> containers);
 }

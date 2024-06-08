@@ -27,5 +27,6 @@ public class ShipmentResponse {
     private String customerId;
     private List<ShipmentDetailsResponse> shipmentDetailsResponses;
     private List<InvoiceResponse> invoiceResponses;
+    private List<ContainerResponse> containerResponses;
 
 }

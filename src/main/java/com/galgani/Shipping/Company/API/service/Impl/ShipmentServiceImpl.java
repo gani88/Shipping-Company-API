@@ -1,19 +1,14 @@
 package com.galgani.Shipping.Company.API.service.Impl;
 
 import com.galgani.Shipping.Company.API.dto.request.ShipmentRequest;
+import com.galgani.Shipping.Company.API.dto.response.ContainerResponse;
 import com.galgani.Shipping.Company.API.dto.response.InvoiceResponse;
 import com.galgani.Shipping.Company.API.dto.response.ShipmentDetailsResponse;
 import com.galgani.Shipping.Company.API.dto.response.ShipmentResponse;
-import com.galgani.Shipping.Company.API.entity.Customer;
-import com.galgani.Shipping.Company.API.entity.Invoice;
-import com.galgani.Shipping.Company.API.entity.Shipment;
-import com.galgani.Shipping.Company.API.entity.ShipmentDetails;
+import com.galgani.Shipping.Company.API.entity.*;
 import com.galgani.Shipping.Company.API.repository.ShipmentDetailsRepository;
 import com.galgani.Shipping.Company.API.repository.ShipmentRepository;
-import com.galgani.Shipping.Company.API.service.CustomerService;
-import com.galgani.Shipping.Company.API.service.InvoiceService;
-import com.galgani.Shipping.Company.API.service.ShipmentDetailsService;
-import com.galgani.Shipping.Company.API.service.ShipmentService;
+import com.galgani.Shipping.Company.API.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +23,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     private final ShipmentDetailsService shipmentDetailsService;
     private final CustomerService customerService;
     private final InvoiceService invoiceService;
+    private final ContainerService containerService;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -77,6 +73,19 @@ public class ShipmentServiceImpl implements ShipmentService {
 
         invoiceService.createBulk(invoices);
 
+        // Save to Container
+        List<Container> containers = shipmentRequest.getNewContainerRequests().stream().map(
+                newContainerRequest -> {
+                    return Container.builder()
+                            .location(newContainerRequest.getLocation())
+                            .containerType(newContainerRequest.getContainerType())
+                            .shipment(shipment)
+                            .build();
+                }
+        ).toList();
+
+        containerService.createBulk(containers);
+
         // Response
         List<ShipmentDetailsResponse> shipmentDetailsResponses = shipmentDetails.stream().map(
             shipmentDetails1 -> {
@@ -102,6 +111,17 @@ public class ShipmentServiceImpl implements ShipmentService {
                 }
         ).toList();
 
+        List<ContainerResponse> containerResponses = containers.stream().map(
+                container -> {
+                    return ContainerResponse.builder()
+                            .id(container.getId())
+                            .location(container.getLocation())
+                            .containerType(container.getContainerType())
+                            .shipment_id(container.getShipment().getId())
+                            .build();
+                }
+        ).toList();
+
         return ShipmentResponse.builder()
                 .id(shipment.getId())
                 .origin(shipment.getOrigin())
@@ -113,6 +133,7 @@ public class ShipmentServiceImpl implements ShipmentService {
                 .customerId(shipment.getCustomer().getId())
                 .shipmentDetailsResponses(shipmentDetailsResponses)
                 .invoiceResponses(invoiceResponses)
+                .containerResponses(containerResponses)
                 .build();
     }
 }
